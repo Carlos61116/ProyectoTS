@@ -1,0 +1,10 @@
+.cartas{
+    border: 1px solid black; 
+    width: 150px;
+    background-color: gray;
+    margin: 5px;
+}
+
+.activo{
+    background-color: yellow;
+}

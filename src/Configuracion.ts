@@ -1,4 +1,4 @@
-class Configuracion{
+export class Configuracion{
 
     cantJug: number;
 

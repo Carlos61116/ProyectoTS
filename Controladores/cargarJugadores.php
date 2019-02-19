@@ -2,7 +2,7 @@
 
     $conexion = new PDO('mysql:host=127.0.0.1;dbname=ruleta','root','root');
 
-    $sql="select * from configuracion";
+    $sql="select * from jugadores";
 	$conexion->query("SET NAMES 'utf8'");
     $resultados = $conexion->query($sql);
     $datos = array();

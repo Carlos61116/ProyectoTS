@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Configuracion = /** @class */ (function () {
     function Configuracion(c, n) {
         this.cantJug = c;
@@ -12,3 +13,4 @@ var Configuracion = /** @class */ (function () {
     };
     return Configuracion;
 }());
+exports.Configuracion = Configuracion;

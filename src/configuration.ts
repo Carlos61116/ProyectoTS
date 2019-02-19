@@ -31,6 +31,7 @@ function insertarCambios() {
     
     var j1 = ($("#jugador1").val() as String);
     var j2 = ($("#jugador2").val() as String);
+    
     var j3 = ($("#jugador3").val() as String);
     var j4 = ($("#jugador4").val() as String);
     
@@ -39,7 +40,7 @@ function insertarCambios() {
 
         url: "Controladores/confi.php",
 
-        data: { jg: jg, cant: cant, prem: prem,j1: j1 ,j2: j2,j3: j3,j4: j4 },
+        data: { jg: jg, cant: cant, prem: prem, j1: j1 ,j2: j2,j3: j3,j4: j4 },
         dataType: "json",
         async: true,
         type: "GET",
