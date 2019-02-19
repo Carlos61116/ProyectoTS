@@ -1,0 +1,36 @@
+body{
+    background-color: aqua;
+}
+
+h1{
+    color: darkmagenta;
+}
+
+a{
+    margin: 10px;
+    color: darkmagenta;
+    
+}
+
+#princi{
+    margin: 0px auto;
+    width: 350px;
+    background-color: aquamarine;
+    border: 2px solid black;
+    border-radius: 8%;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+a:link {
+    text-decoration: none;
+}
+  
+a:visited {
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+    color: black;
+}

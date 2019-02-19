@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ruleta de la suerte</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.17/system.js"></script>
+    <link rel="stylesheet" type="text/css" href="../CSS/IndexCSS.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/ConfCSS.css">
+
+</head>
+
+<body>
+
+
+    <div id="princi">
+
+        <h1>Menú de configuración</h1>
+
+        <form id="formConf" action="Juego/index.html">
+            <label>Introduzca la cantidad de jugadores</label><br>
+            <input type="radio" name="jg" value="2" checked>2
+            <input type="radio" name="jg" value="3">3
+            <input type="radio" name="jg" value="4">4
+            <br><br>
+
+            <label>Introduzca el número de rondas</label><br>
+            <input type="number" name="cant" id="numRo" min="1" required>
+            <br><br>
+
+            <label>Introduzca el premio</label><br>
+            <input type="number" name="premio" id="premio" min="1" required>
+
+            <br><br>
+            <input type="submit" value="Confirmar" >
+        </form>
+
+        <a href="../index.html">Volver atrás</a>
+
+    </div>
+
+    
+
+</body>
+
+</html>
