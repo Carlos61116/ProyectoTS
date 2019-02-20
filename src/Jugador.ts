@@ -6,10 +6,13 @@ export class Jugador {
 
         bote: number;
 
+        activo:boolean;
+
         constructor(nombre: string){
             this.nombre = nombre;
             this.dinero = 0;
             this.bote = 0;
+            this.activo = false;
         }
 
         getNombre(){
@@ -37,6 +40,18 @@ export class Jugador {
 
         sumarBote(din:number){
             this.bote +=din;
+        }
+
+        activar(){
+            this.activo = true;
+        }
+
+        desactivar(){
+            this.activo = false;
+        }
+
+        isActive(){
+            return this.activo;
         }
 
 }

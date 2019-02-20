@@ -8,3 +8,23 @@
 .activo{
     background-color: yellow;
 }
+
+#cambia{
+    
+    float: left;
+}
+
+#panel{
+    height: 50%;
+    width: 100%;
+    float: left;
+}
+
+.adivinar{
+    background-color: lightblue;
+    border: 1px solid black;
+    width: 20px;
+    margin: 5px;
+    height: 25px;
+    float: left;
+}

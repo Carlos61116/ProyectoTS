@@ -1,18 +1,21 @@
 import * as $ from 'jquery';
-import {Jugador} from './Jugador';
-import {Configuracion} from './Configuracion';
-import {Palabras} from './Palabras';
+import { Jugador } from './Jugador';
+import { Configuracion } from './Configuracion';
+import { Palabras } from './Palabras';
 
 $(document).ready(inicio);
 
-var conf:Configuracion;
+var conf: Configuracion;
+var jug: Jugador[] = Array();
+var palabras: Palabras[] = Array();
 
-function inicio(){
+function inicio() {
     cargarConfiguracion();
+    
 }
 
 
-function cargarConfiguracion(){
+function cargarConfiguracion() {
     $.ajax({
 
         url: "Controladores/cargarJuego.php",
@@ -23,84 +26,106 @@ function cargarConfiguracion(){
 
         success: function (datos) {
 
-            conf = new Configuracion(datos[0][0],datos[0][1]);
-            cargarJugadores(conf);
+            conf = new Configuracion(datos[0][0], datos[0][1]);
+            cargarJugadores();
+            cargarPalabras();
+            crearPanel();
+
 
         }, error: function () {
 
-            
+
             $("#cambia").html("<p>Error al cargar los datos");
 
         }
     });
 }
 
-function cargarJugadores(conf:Configuracion){
-    var jugadores = Array();
+function cargarJugadores() {
     $.ajax({
 
         url: "Controladores/cargarJugadores.php",
 
         dataType: "json",
-        async: true,
+        async: false,
         type: "GET",
 
         success: function (datos) {
-            
-            for(var e = 0;e<datos.length;e++){
-                var Jg = new Jugador(datos[e][1]);
-                jugadores[e] = Jg;            
+
+            for (var e = 0; e < datos.length; e++) {
+                jug[e] = new Jugador(datos[e][1]);
+                if(e == 0){
+                    jug[e].activar();
+                }
+
             }
-            crearJugadores(conf,jugadores);
+            crearJugadores();
 
         }, error: function () {
 
-            
+
             $("#cambia").html("<p>Error al cargar los datos");
 
         }
     });
 }
 
-function cargarPalabras(conf:Configuracion){
-    var jugadores = Array();
+function cargarPalabras() {
+
     $.ajax({
 
         url: "Controladores/cargarPalabras.php",
 
         dataType: "json",
-        async: true,
+        data: { cantPa: conf.getRondas() },
+        async: false,
         type: "GET",
 
         success: function (datos) {
-            
-            for(var e = 0;e<conf.getRondas();e++){
-                var Jg = new Jugador(datos[e][1]);
-                jugadores[e] = Jg;            
+
+            for (var e = 0; e < datos.length; e++) {
+                palabras[e] = new Palabras(datos[e][1], datos[e][2]);
+                console.log(palabras[e]);
             }
-            crearJugadores(conf,jugadores);
+           
 
         }, error: function () {
 
-            
+
             $("#cambia").html("<p>Error al cargar los datos");
 
         }
     });
 }
 
-function crearJugadores(conf:Configuracion,jg:Jugador[]){
+
+function crearJugadores() {
     $("#cambia").html("");
-    for(var e = 0;e<conf.getJugadores();e++){
+    for (var e = 0; e < conf.getJugadores(); e++) {
         var di = document.createElement("div");
-        di.id="jg"+e;
-        var tr = "<table><tr><th>"+jg[e].getNombre()+"</th></tr><tr><th>Dinero</th><td>"+jg[e].getdinero()+"</td></tr><tr><th>Bote</th><td>"+jg[e].getBote()+"</td></tr></table>";
+        di.id = "jg" + e;
+        var tr = "<table><tr><th>" + jug[e].getNombre() + "</th></tr><tr><th>Dinero</th><td>" + jug[e].getdinero() + "</td></tr><tr><th>Bote</th><td>" + jug[e].getBote() + "</td></tr></table>";
         $("#cambia").append(di);
-        if(e==0)
-            $("#jg"+e).addClass("cartas activo");
-        else 
-            $("#jg"+e).addClass("cartas");
-        $("#jg"+e).html(tr);
+        if (jug[e].isActive())
+            $("#jg" + e).addClass("cartas activo");
+        else
+            $("#jg" + e).addClass("cartas");
+        $("#jg" + e).html(tr);
     }
 }
 
+
+function crearPanel(){
+    
+    
+ for (let e = 0; e < palabras[0].getPalabra().length; e++) {
+        var di = document.createElement("div") ;
+      //  di.textContent = palabras[0].getPalabra().charAt(e);
+        di.className = "adivinar";
+        di.id = palabras[0].getPalabra().charAt(e);
+        $("#palabra").append(di);
+        
+    } 
+    $("#pista").append("<p> Pista: "+palabras[0].getPista()+"</p>");
+
+}

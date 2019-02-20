@@ -1,4 +1,4 @@
-export class Configuracion{
+export class Palabras{
 
     palabra: String;
 
@@ -9,11 +9,11 @@ export class Configuracion{
         this.pista = pi;
     }
 
-    getJugadores(){
+    getPalabra(){
         return this.palabra;
     }
 
-    getRondas(){
+    getPista(){
         return this.pista;
     }
 }

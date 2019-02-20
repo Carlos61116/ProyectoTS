@@ -5,6 +5,7 @@ var Jugador = /** @class */ (function () {
         this.nombre = nombre;
         this.dinero = 0;
         this.bote = 0;
+        this.activo = false;
     }
     Jugador.prototype.getNombre = function () {
         return this.nombre;
@@ -26,6 +27,15 @@ var Jugador = /** @class */ (function () {
     };
     Jugador.prototype.sumarBote = function (din) {
         this.bote += din;
+    };
+    Jugador.prototype.activar = function () {
+        this.activo = true;
+    };
+    Jugador.prototype.desactivar = function () {
+        this.activo = false;
+    };
+    Jugador.prototype.isActive = function () {
+        return this.activo;
     };
     return Jugador;
 }());

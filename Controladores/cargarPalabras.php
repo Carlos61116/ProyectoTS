@@ -2,8 +2,8 @@
 
 
 $conexion = new PDO('mysql:host=127.0.0.1;dbname=ruleta','root','root');
-
-$sql="select * from palabras";
+$max = $_GET['cantPa'];
+$sql="select * from palabras order by RAND() LIMIT 0,$max";
 $conexion->query("SET NAMES 'utf8'");
 $resultados = $conexion->query($sql);
 $datos = array();
