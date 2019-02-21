@@ -10,6 +10,10 @@ var jug = Array();
 var palabras = Array();
 function inicio() {
     cargarConfiguracion();
+    consonantes();
+    $("#cons").click(consonantes);
+    $("#voc").click(vocales);
+    $("#adv").click(adivinar);
 }
 function cargarConfiguracion() {
     $.ajax({
@@ -55,8 +59,7 @@ function cargarPalabras() {
         type: "GET",
         success: function (datos) {
             for (var e = 0; e < datos.length; e++) {
-                palabras[e] = new Palabras_1.Palabras(datos[e][1], datos[e][2]);
-                console.log(palabras[e]);
+                palabras[e] = new Palabras_1.Palabras((datos[e][1]).toUpperCase(), datos[e][2]);
             }
         }, error: function () {
             $("#cambia").html("<p>Error al cargar los datos");
@@ -78,12 +81,52 @@ function crearJugadores() {
     }
 }
 function crearPanel() {
-    for (var e = 0; e < palabras[0].getPalabra().length; e++) {
+    for (var e = 0; e < palabras[conf.getRondasJugadas()].getPalabra().length; e++) {
         var di = document.createElement("div");
-        //  di.textContent = palabras[0].getPalabra().charAt(e);
-        di.className = "adivinar";
-        di.id = palabras[0].getPalabra().charAt(e);
+        di.className = "adivinar " + palabras[conf.getRondasJugadas()].getPalabra().charAt(e);
         $("#palabra").append(di);
     }
-    $("#pista").append("<p> Pista: " + palabras[0].getPista() + "</p>");
+    $("#pista").append("<p> Pista: " + palabras[conf.getRondasJugadas()].getPista() + "</p>");
+}
+function consonantes() {
+    $("#letras").html("");
+    var consonantes = new Array("B", "C", "D", "F", "G", "H", "J", "K", "L", "M", "Ñ", "P", "Q", "R", "S", "T", "V", "W", "X", "Y", "Z");
+    for (var e = 0; e < consonantes.length; e++) {
+        var di = document.createElement("input");
+        di.className = "letras";
+        di.type = "button";
+        di.value = consonantes[e];
+        $("#letras").append(di);
+        di.onclick = sd;
+    }
+}
+function vocales() {
+    $("#letras").html("");
+    var vocales = new Array("A", "E", "I", "O", "U");
+    for (var e = 0; e < vocales.length; e++) {
+        var di = document.createElement("input");
+        di.className = "letras";
+        di.type = "button";
+        di.value = vocales[e];
+        di.onclick = sd;
+        $("#letras").append(di);
+    }
+}
+function sd() {
+    if (palabras[conf.getRondasJugadas()].getPalabra().indexOf(this.value) != -1) {
+        $("." + this.value).text(this.value);
+    }
+    else {
+        alert("No se encuentra la letra");
+        console.log(this.value + " Error");
+    }
+}
+function adivinar() {
+    var palabra = prompt("Inserta la palabra");
+    if (palabras[conf.getRondasJugadas()].getPalabra() == palabra.toUpperCase().trim()) {
+        alert("Has acertado!");
+    }
+    else {
+        alert("Palabra incorrecta");
+    }
 }

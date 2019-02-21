@@ -4,9 +4,12 @@ export class Configuracion{
 
     numRon: number;
 
+    rondas:number;
+
     constructor(c: number,n:number){
         this.cantJug = c;
         this.numRon = n;
+        this.rondas = 0;
     }
 
     getJugadores(){
@@ -15,5 +18,8 @@ export class Configuracion{
 
     getRondas(){
         return this.numRon;
+    }
+    getRondasJugadas(){
+        return this.rondas;
     }
 }
