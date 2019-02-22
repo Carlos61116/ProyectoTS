@@ -19,11 +19,11 @@ var Jugador = /** @class */ (function () {
     Jugador.prototype.sumarDinero = function (din) {
         this.dinero += din;
     };
+    Jugador.prototype.quiebra = function () {
+        this.dinero = 0;
+    };
     Jugador.prototype.restarDinero = function (din) {
-        if (din < this.dinero)
-            this.dinero -= din;
-        else
-            return false;
+        this.dinero -= din;
     };
     Jugador.prototype.sumarBote = function (din) {
         this.bote += din;

@@ -24,7 +24,6 @@ function jugadores() {
 
 
 function insertarCambios() {
-    console.log("hola");
     var jg = ($("input[name='jg']:checked").val() as Number);
     var cant = ($("#numRo").val() as Number);
     var prem = ($("#premio").val() as Number);

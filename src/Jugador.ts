@@ -1,57 +1,58 @@
 export class Jugador {
 
-        nombre: string;
+    nombre: string;
 
-        dinero: number;
+    dinero: number;
 
-        bote: number;
+    bote: number;
 
-        activo:boolean;
+    activo: boolean;
 
-        constructor(nombre: string){
-            this.nombre = nombre;
-            this.dinero = 0;
-            this.bote = 0;
-            this.activo = false;
-        }
+    constructor(nombre: string) {
+        this.nombre = nombre;
+        this.dinero = 0;
+        this.bote = 0;
+        this.activo = false;
+    }
 
-        getNombre(){
-            return this.nombre;
-        }
+    getNombre() {
+        return this.nombre;
+    }
 
-        getBote(){
-            return this.bote;
-        }
+    getBote() {
+        return this.bote;
+    }
 
-        getdinero(){
-            return this.dinero;
-        }
+    getdinero() {
+        return this.dinero;
+    }
 
-        sumarDinero(din:number){
-            this.dinero +=din;
-        }
+    sumarDinero(din: number) {
+        this.dinero += din;
+    }
 
-        restarDinero(din:number){
-            if(din<this.dinero)
-                this.dinero -=din;
-            else   
-                return false;
-        }
+    quiebra() {
+        this.dinero = 0;
+    }
 
-        sumarBote(din:number){
-            this.bote +=din;
-        }
+    restarDinero(din: number) {
+        this.dinero -= din;
+    }
 
-        activar(){
-            this.activo = true;
-        }
+    sumarBote(din: number) {
+        this.bote += din;
+    }
 
-        desactivar(){
-            this.activo = false;
-        }
+    activar() {
+        this.activo = true;
+    }
 
-        isActive(){
-            return this.activo;
-        }
+    desactivar() {
+        this.activo = false;
+    }
+
+    isActive() {
+        return this.activo;
+    }
 
 }

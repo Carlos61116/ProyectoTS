@@ -19,7 +19,6 @@ function jugadores() {
     }
 }
 function insertarCambios() {
-    console.log("hola");
     var jg = $("input[name='jg']:checked").val();
     var cant = $("#numRo").val();
     var prem = $("#premio").val();

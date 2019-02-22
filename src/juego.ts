@@ -149,26 +149,81 @@ function vocales() {
         di.className = "letras";
         di.type = "button";
         di.value = vocales[e];
-        di.onclick = sd;
+        di.onclick = comprarVocales;
         $("#letras").append(di);
     }
 }
 
 function sd(this: any) {
-    if (palabras[conf.getRondasJugadas()].getPalabra().indexOf(this.value) != -1) {
+    if (palabras[conf.getRondasJugadas()].getPalabra().indexOf(this.value) != -1 && !letraInsertada(this.value)) {
         $("." + this.value).text(this.value);
-
+        sumar(100);
     } else {
-        alert("No se encuentra la letra");
-        console.log(this.value + " Error");
+        alert("No se encuentra la letra o ya ha sido introducida");
+        pasarTurno();
     }
 }
 
-function adivinar(){
-    var palabra:String = (prompt("Inserta la palabra") as String);
-    if (palabras[conf.getRondasJugadas()].getPalabra()==palabra.toUpperCase().trim()) {
+function comprarVocales(this: any) {
+    var jugador: number = (jugadorActivo() as number);
+    if (palabras[conf.getRondasJugadas()].getPalabra().indexOf(this.value) != -1 && !letraInsertada(this.value)) {
+        if (jug[jugador].getdinero() < 50) {
+            pasarTurno();
+            alert("No tienes dinero suficiente, Se pasa de turno");
+        } else {
+            jug[jugador].restarDinero(50);
+            $("." + this.value).text(this.value);
+            crearJugadores();
+        }
+    } else {
+        alert("No se encuentra la letra o ya ha sido introducida");
+        pasarTurno();
+    }
+
+}
+
+
+
+function adivinar() {
+    var palabra: String = (prompt("Inserta la palabra") as String);
+    if (palabras[conf.getRondasJugadas()].getPalabra() == palabra.toUpperCase().trim()) {
         alert("Has acertado!");
+        sumar(1000);
     } else {
         alert("Palabra incorrecta");
+        pasarTurno();
     }
+}
+
+function pasarTurno() {
+    var jugador: number = (jugadorActivo() as number);
+    jug[jugador].desactivar();
+    if (jugador == conf.getJugadores() - 1)
+        jug[0].activar();
+    else
+        jug[++jugador].activar();
+    crearJugadores();
+}
+
+function jugadorActivo() {
+    for (let index = 0; index < jug.length; index++) {
+        if (jug[index].isActive()) {
+            return index;
+        }
+    }
+
+}
+
+function quiebra() {
+    jug[jugadorActivo() as number].quiebra;
+}
+
+function letraInsertada(ltr: String){
+    return $("."+ltr).text() == ltr;
+}
+
+function sumar(cant: number) {
+    var n: number = (jugadorActivo() as number);
+    jug[n].sumarDinero(cant);
+    crearJugadores();
 }
