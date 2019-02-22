@@ -17,7 +17,7 @@ function inicio() {
     $("#adv").click(adivinar);
 }
 
-
+////////////////////////////////////// CONEXIONES CON LAS BASES DE DATOS //////////////////////////////////////
 function cargarConfiguracion() {
     $.ajax({
 
@@ -101,7 +101,13 @@ function cargarPalabras() {
     });
 }
 
+////////////////////////////////////// CONEXIONES CON LAS BASES DE DATOS //////////////////////////////////////
 
+
+
+
+
+////////////////////////////////////// CREACIONES EN EL HTML /////////////////////////////////////
 function crearJugadores() {
     $("#cambia").html("");
     for (var e = 0; e < conf.getJugadores(); e++) {
@@ -136,8 +142,8 @@ function consonantes() {
         di.className = "letras";
         di.type = "button";
         di.value = consonantes[e];
+        di.onclick = adivinarConsonante;
         $("#letras").append(di);
-        di.onclick = sd;
     }
 }
 
@@ -153,8 +159,15 @@ function vocales() {
         $("#letras").append(di);
     }
 }
+////////////////////////////////////// CREACIONES EN EL HTML /////////////////////////////////////
 
-function sd(this: any) {
+
+
+
+
+
+////////////////////////////////////// FUNCIONALIDAD EL JUEGO /////////////////////////////////////
+function adivinarConsonante(this: any) {
     if (palabras[conf.getRondasJugadas()].getPalabra().indexOf(this.value) != -1 && !letraInsertada(this.value)) {
         $("." + this.value).text(this.value);
         sumar(100);
@@ -227,3 +240,5 @@ function sumar(cant: number) {
     jug[n].sumarDinero(cant);
     crearJugadores();
 }
+
+////////////////////////////////////// FUNCIONALIDAD EL JUEGO /////////////////////////////////////
