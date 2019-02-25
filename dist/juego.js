@@ -15,6 +15,7 @@ function inicio() {
     $("#voc").click(vocales);
     $("#adv").click(adivinar);
 }
+////////////////////////////////////// CONEXIONES CON LAS BASES DE DATOS //////////////////////////////////////
 function cargarConfiguracion() {
     $.ajax({
         url: "Controladores/cargarJuego.php",
@@ -66,6 +67,8 @@ function cargarPalabras() {
         }
     });
 }
+////////////////////////////////////// CONEXIONES CON LAS BASES DE DATOS //////////////////////////////////////
+////////////////////////////////////// CREACIONES EN EL HTML /////////////////////////////////////
 function crearJugadores() {
     $("#cambia").html("");
     for (var e = 0; e < conf.getJugadores(); e++) {
@@ -81,6 +84,8 @@ function crearJugadores() {
     }
 }
 function crearPanel() {
+    $("#palabra").html("");
+    $("#pista").html("");
     for (var e = 0; e < palabras[conf.getRondasJugadas()].getPalabra().length; e++) {
         var di = document.createElement("div");
         di.className = "adivinar " + palabras[conf.getRondasJugadas()].getPalabra().charAt(e);
@@ -96,8 +101,8 @@ function consonantes() {
         di.className = "letras";
         di.type = "button";
         di.value = consonantes[e];
+        di.onclick = adivinarConsonante;
         $("#letras").append(di);
-        di.onclick = sd;
     }
 }
 function vocales() {
@@ -112,7 +117,9 @@ function vocales() {
         $("#letras").append(di);
     }
 }
-function sd() {
+////////////////////////////////////// CREACIONES EN EL HTML /////////////////////////////////////
+////////////////////////////////////// FUNCIONALIDAD EL JUEGO /////////////////////////////////////
+function adivinarConsonante() {
     if (palabras[conf.getRondasJugadas()].getPalabra().indexOf(this.value) != -1 && !letraInsertada(this.value)) {
         $("." + this.value).text(this.value);
         sumar(100);
@@ -144,7 +151,8 @@ function adivinar() {
     var palabra = prompt("Inserta la palabra");
     if (palabras[conf.getRondasJugadas()].getPalabra() == palabra.toUpperCase().trim()) {
         alert("Has acertado!");
-        sumar(1000);
+        SumarBote();
+        rondaAcabada();
     }
     else {
         alert("Palabra incorrecta");
@@ -168,7 +176,8 @@ function jugadorActivo() {
     }
 }
 function quiebra() {
-    jug[jugadorActivo()].quiebra;
+    jug[jugadorActivo()].quiebra();
+    pasarTurno();
 }
 function letraInsertada(ltr) {
     return $("." + ltr).text() == ltr;
@@ -178,3 +187,37 @@ function sumar(cant) {
     jug[n].sumarDinero(cant);
     crearJugadores();
 }
+function rondaAcabada() {
+    if ((conf.getRondas() - 1) != conf.getRondasJugadas()) {
+        reiniciarDinero();
+        conf.sumRondas();
+        crearJugadores();
+        crearPanel();
+    }
+    else {
+        var ganador = comprobarGanador();
+        alert("El ganador es: " + ganador.getNombre() + " con " + ganador.getBote() + "€");
+        window.location.href = "index.html";
+    }
+}
+function SumarBote() {
+    var n = jugadorActivo();
+    jug[n].sumarBote(jug[n].getdinero());
+    crearJugadores();
+}
+function reiniciarDinero() {
+    for (var index = 0; index < jug.length; index++) {
+        jug[index].quiebra();
+    }
+}
+function comprobarGanador() {
+    var gan;
+    gan = jug[0];
+    for (var index = 0; index < jug.length; index++) {
+        if (jug[index].getBote() > gan.getBote()) {
+            gan = jug[index];
+        }
+    }
+    return gan;
+}
+////////////////////////////////////// FUNCIONALIDAD EL JUEGO /////////////////////////////////////

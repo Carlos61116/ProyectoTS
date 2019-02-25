@@ -15,6 +15,9 @@ var Configuracion = /** @class */ (function () {
     Configuracion.prototype.getRondasJugadas = function () {
         return this.rondas;
     };
+    Configuracion.prototype.sumRondas = function () {
+        this.rondas++;
+    };
     return Configuracion;
 }());
 exports.Configuracion = Configuracion;

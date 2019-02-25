@@ -22,4 +22,8 @@ export class Configuracion{
     getRondasJugadas(){
         return this.rondas;
     }
+
+    sumRondas(){
+        this.rondas++;
+    }
 }

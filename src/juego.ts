@@ -125,6 +125,8 @@ function crearJugadores() {
 
 
 function crearPanel() {
+    $("#palabra").html("");
+    $("#pista").html("");
     for (let e = 0; e < palabras[conf.getRondasJugadas()].getPalabra().length; e++) {
         var di = document.createElement("div");
         di.className = "adivinar " + palabras[conf.getRondasJugadas()].getPalabra().charAt(e);
@@ -201,7 +203,9 @@ function adivinar() {
     var palabra: String = (prompt("Inserta la palabra") as String);
     if (palabras[conf.getRondasJugadas()].getPalabra() == palabra.toUpperCase().trim()) {
         alert("Has acertado!");
-        sumar(1000);
+        SumarBote();
+        rondaAcabada();
+
     } else {
         alert("Palabra incorrecta");
         pasarTurno();
@@ -228,7 +232,8 @@ function jugadorActivo() {
 }
 
 function quiebra() {
-    jug[jugadorActivo() as number].quiebra;
+    jug[jugadorActivo() as number].quiebra();
+    pasarTurno();
 }
 
 function letraInsertada(ltr: String){
@@ -239,6 +244,42 @@ function sumar(cant: number) {
     var n: number = (jugadorActivo() as number);
     jug[n].sumarDinero(cant);
     crearJugadores();
+}
+
+function rondaAcabada(){
+    if((conf.getRondas()-1)!=conf.getRondasJugadas()){
+        reiniciarDinero();
+        conf.sumRondas();
+        crearJugadores();
+        crearPanel();
+    } else {
+        var ganador:Jugador = comprobarGanador();
+        alert("El ganador es: "+ganador.getNombre()+" con "+ganador.getBote()+"€");
+        window.location.href = "index.html";
+    }
+}
+
+function SumarBote(){
+    var n: number = (jugadorActivo() as number);
+    jug[n].sumarBote(jug[n].getdinero());
+    crearJugadores();
+}
+
+function reiniciarDinero(){
+    for (let index = 0; index < jug.length; index++) {
+        jug[index].quiebra();
+    }
+}
+
+function comprobarGanador(){
+    var gan:Jugador;
+    gan = jug[0];
+    for (let index = 0; index < jug.length; index++) {
+        if(jug[index].getBote()>gan.getBote()){
+            gan = jug[index];
+        }
+    }
+    return gan;
 }
 
 ////////////////////////////////////// FUNCIONALIDAD EL JUEGO /////////////////////////////////////
