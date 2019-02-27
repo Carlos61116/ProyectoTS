@@ -138,6 +138,7 @@ function vocales() {
         $("#letras").append(di);
     }
 }
+////////////////////////////////////////// RULETA //////////////////////////////////////////////
 function byte2Hex(n) {
     var nybHexString = "0123456789ABCDEF";
     return String(nybHexString.substr((n >> 4) & 0x0F, 1)) + nybHexString.substr(n & 0x0F, 1);
@@ -231,16 +232,13 @@ function stopRotateWheel() {
         pasarTurno();
     }
     if (valor == "Quiebra") {
-        var jugador = jugadorActivo();
-        jug[jugador].quiebra();
-        alert("Quiebra!");
-        pasarTurno();
+        quiebra();
     }
     if (valor == "Mitad") {
         var jugador = jugadorActivo();
         valor = -(jug[jugador].getdinero() / 2);
     }
-    mostrar();
+    $("#cons").removeAttr("disabled");
     ctx.restore();
 }
 function easeOut(t, b, c, d) {
@@ -260,19 +258,22 @@ function mostrar() {
     $("#voc").removeAttr("disabled");
     $("#adv").removeAttr("disabled");
 }
+////////////////////////////////////////// RULETA //////////////////////////////////////////////
 ////////////////////////////////////// CREACIONES EN EL HTML /////////////////////////////////////
 ////////////////////////////////////// FUNCIONALIDAD EL JUEGO /////////////////////////////////////
 function adivinarConsonante() {
     if (palabras[conf.getRondasJugadas()].getPalabra().indexOf(this.value) != -1 && !letraInsertada(this.value)) {
         $("." + this.value).text(this.value);
         sumar(valor);
+        $("#cons").attr("disabled", "disabled");
+        $("#adv").removeAttr("disabled");
+        $("#voc").removeAttr("disabled");
         $("#spin").removeAttr("disabled");
     }
     else {
         alert("No se encuentra la letra o ya ha sido introducida");
         pasarTurno();
     }
-    esconder();
     $("#spin").removeAttr("disabled");
 }
 function comprarVocales() {
@@ -292,7 +293,6 @@ function comprarVocales() {
         alert("No se encuentra la letra o ya ha sido introducida");
         pasarTurno();
     }
-    esconder();
     $("#spin").removeAttr("disabled");
 }
 function adivinar() {
@@ -314,8 +314,8 @@ function pasarTurno() {
         jug[0].activar();
     else
         jug[++jugador].activar();
-    if (valor != "Quiebra" || valor != "Pasar Turno")
-        esconder();
+    esconder();
+    $("#spin").removeAttr("disable");
     crearJugadores();
 }
 function jugadorActivo() {

@@ -8,17 +8,17 @@ $(document).ready(inicio);
 var spinArcStart = 10;
 var spinTime = 0;
 var spinTimeTotal = 0;
-var spinAngleStart:any = 0;
+var spinAngleStart: any = 0;
 var canvas;
-var options = [100, 50, 25, 250, "Quiebra", "Pasar turno", 25, 400, 45, "Quiebra", 5, "Mitad"];
+var options = [100, 50, 25, 250, "Quiebra", "Pasar turno", 25, 400, 45, "X2", 5, "Mitad"];
 var startAngle = 0;
 var arc = Math.PI / (options.length / 2);
-var spinTimeout:any = null;
-var ctx:any;
+var spinTimeout: any = null;
+var ctx: any;
 var outsideRadius = 200;
 var textRadius = 160;
 var insideRadius = 125;
-var valor:any = 0;
+var valor: any = 0;
 
 var conf: Configuracion;
 var jug: Jugador[] = Array();
@@ -29,9 +29,9 @@ function inicio() {
     cargarConfiguracion();
     consonantes();
 
-    $("#cons").attr("disabled","disabled");
-    $("#voc").attr("disabled","disabled");
-    $("#adv").attr("disabled","disabled");
+    $("#cons").attr("disabled", "disabled");
+    $("#voc").attr("disabled", "disabled");
+    $("#adv").attr("disabled", "disabled");
     $("#cons").click(consonantes);
     $("#voc").click(vocales);
     $("#adv").click(adivinar);
@@ -186,18 +186,18 @@ function vocales() {
     }
 }
 
+////////////////////////////////////////// RULETA //////////////////////////////////////////////
 
-
-function byte2Hex(n:any) {
+function byte2Hex(n: any) {
     var nybHexString = "0123456789ABCDEF";
     return String(nybHexString.substr((n >> 4) & 0x0F, 1)) + nybHexString.substr(n & 0x0F, 1);
 }
 
-function RGB2Color(r:any, g:any, b:any) {
+function RGB2Color(r: any, g: any, b: any) {
     return '#' + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
 }
 
-function getColor(item:any, maxitem:any) {
+function getColor(item: any, maxitem: any) {
     var phase = 0;
     var center = 128;
     var width = 127;
@@ -215,9 +215,9 @@ function getColor(item:any, maxitem:any) {
 }
 
 function drawRouletteWheel() {
-    var canvas = document.getElementById("canvas") as any;   
-     if (canvas.getContext) {
-       
+    var canvas = document.getElementById("canvas") as any;
+    if (canvas.getContext) {
+
 
         ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, 500, 500);
@@ -297,43 +297,43 @@ function stopRotateWheel() {
     ctx.save();
     ctx.font = 'bold 30px Helvetica, Arial';
     valor = options[index];
-    if(valor=="Pasar turno"){
+    if (valor == "Pasar turno") {
         pasarTurno();
     }
-    if(valor=="Quiebra"){
-        var jugador: number = (jugadorActivo() as number);
-        jug[jugador].quiebra();
-        alert("Quiebra!");
-        pasarTurno();
+    if (valor == "Quiebra") {
+        quiebra();
     }
-    if(valor=="Mitad"){
+    if (valor == "Mitad") {
         var jugador: number = (jugadorActivo() as number);
-        valor = -(jug[jugador].getdinero()/2);
+        valor = -(jug[jugador].getdinero() / 2);
     }
-    mostrar();
+    $("#cons").removeAttr("disabled");
     ctx.restore();
 }
 
-function easeOut(t:any, b:any, c:any, d:any) {
+function easeOut(t: any, b: any, c: any, d: any) {
     var ts = (t /= d) * t;
     var tc = ts * t;
     return b + c * (tc + -3 * ts + 3 * t);
 }
 
-function esconder(){
-    $("#cons").attr("disabled","disabled");
-    $("#voc").attr("disabled","disabled");
-    $("#adv").attr("disabled","disabled");
-    $("#spin").attr("disabled","disabled");
+function esconder() {
+    $("#cons").attr("disabled", "disabled");
+    $("#voc").attr("disabled", "disabled");
+    $("#adv").attr("disabled", "disabled");
+    $("#spin").attr("disabled", "disabled");
     $("#letras").html("");
 
 }
 
-function mostrar(){
+function mostrar() {
     $("#cons").removeAttr("disabled");
     $("#voc").removeAttr("disabled");
     $("#adv").removeAttr("disabled");
 }
+
+////////////////////////////////////////// RULETA //////////////////////////////////////////////
+
 
 ////////////////////////////////////// CREACIONES EN EL HTML /////////////////////////////////////
 
@@ -347,13 +347,15 @@ function adivinarConsonante(this: any) {
     if (palabras[conf.getRondasJugadas()].getPalabra().indexOf(this.value) != -1 && !letraInsertada(this.value)) {
         $("." + this.value).text(this.value);
         sumar(valor);
+        $("#cons").attr("disabled", "disabled");
+        $("#adv").removeAttr("disabled");
+        $("#voc").removeAttr("disabled");
         $("#spin").removeAttr("disabled");
 
     } else {
         alert("No se encuentra la letra o ya ha sido introducida");
         pasarTurno();
     }
-    esconder();
     $("#spin").removeAttr("disabled");
 
 }
@@ -373,9 +375,9 @@ function comprarVocales(this: any) {
         alert("No se encuentra la letra o ya ha sido introducida");
         pasarTurno();
     }
-    esconder();
-    $("#spin").removeAttr("disabled");
     
+    $("#spin").removeAttr("disabled");
+
 }
 
 
@@ -401,9 +403,8 @@ function pasarTurno() {
     else
         jug[++jugador].activar();
 
-    if(valor!="Quiebra" || valor!="Pasar Turno")
-        esconder();
-        
+    esconder();
+    $("#spin").removeAttr("disable");
     crearJugadores();
 }
 
