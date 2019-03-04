@@ -6,21 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.20.17/system.js"></script>
-    <link rel="stylesheet" type="text/css" href="CSS/IndexCSS.css">
-    <link rel="stylesheet" type="text/css" href="CSS/ConfCSS.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/IndexCSS.css">
+    <link rel="stylesheet" type="text/css" href="../CSS/ConfCSS.css">
 </head>
 
 <body>
     <script>
         System.config({
             packages: {
-                "dist": {
+                "../dist": {
                     "defaultExtension": "js",
                     "main": "configuration"
                 }
             },
             map: {
-                'jquery': 'node_modules/jquery/dist/jquery.js' 
+                'jquery': '../node_modules/jquery/dist/jquery.js' 
             },
             paths: {
                 "npm:*": "node_modules/*"
@@ -28,7 +28,7 @@
 
         })
 
-        System.import("dist");
+        System.import("../dist");
     </script>
     
 

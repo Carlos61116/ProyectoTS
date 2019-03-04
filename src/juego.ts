@@ -44,7 +44,7 @@ function inicio() {
 function cargarConfiguracion() {
     $.ajax({
 
-        url: "Controladores/cargarJuego.php",
+        url: "../Controladores/cargarJuego.php",
 
         dataType: "json",
         async: true,
@@ -70,7 +70,7 @@ function cargarConfiguracion() {
 function cargarJugadores() {
     $.ajax({
 
-        url: "Controladores/cargarJugadores.php",
+        url: "../Controladores/cargarJugadores.php",
 
         dataType: "json",
         async: false,
@@ -101,7 +101,7 @@ function cargarPalabras() {
 
     $.ajax({
 
-        url: "Controladores/cargarPalabras.php",
+        url: "../Controladores/cargarPalabras.php",
 
         dataType: "json",
         data: { cantPa: conf.getRondas() },

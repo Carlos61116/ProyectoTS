@@ -28,7 +28,7 @@ function insertarCambios() {
     var j4 = $("#jugador4").val();
     $("#cambia").html("<img src='img/loading.gif'> <br> <p>Cargando, no abandones la página<p>");
     $.ajax({
-        url: "Controladores/confi.php",
+        url: "../Controladores/confi.php",
         data: { jg: jg, cant: cant, prem: prem, j1: j1, j2: j2, j3: j3, j4: j4 },
         dataType: "json",
         async: true,
