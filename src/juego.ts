@@ -10,7 +10,7 @@ var spinTime = 0;
 var spinTimeTotal = 0;
 var spinAngleStart: any = 0;
 var canvas;
-var options = [100, 50, 25, 250, "Quiebra", "Pasar turno", 25, 400, 45, "X2", 5, "Mitad"];
+var options = [25, 50, "Quiebra", 250, 100, "Pasar turno", 25, 400, 45, "X2", 5, "Mitad"];
 var startAngle = 0;
 var arc = Math.PI / (options.length / 2);
 var spinTimeout: any = null;
@@ -299,15 +299,22 @@ function stopRotateWheel() {
     valor = options[index];
     if (valor == "Pasar turno") {
         pasarTurno();
-    }
-    if (valor == "Quiebra") {
+    } else if (valor == "Quiebra") {
         quiebra();
-    }
-    if (valor == "Mitad") {
+    } else if (valor == "Mitad") {
         var jugador: number = (jugadorActivo() as number);
         valor = -(jug[jugador].getdinero() / 2);
+        $("#cons").removeAttr("disabled");
+        $("#adv").removeAttr("disabled");
+    } else if (valor == "X2"){
+        var jugador: number = (jugadorActivo() as number);
+        valor = jug[jugador].getdinero();
+        $("#cons").removeAttr("disabled");
+        $("#adv").removeAttr("disabled");
+    } else {
+        $("#cons").removeAttr("disabled");
+        $("#adv").removeAttr("disabled");
     }
-    $("#cons").removeAttr("disabled");
     ctx.restore();
 }
 
@@ -326,11 +333,7 @@ function esconder() {
 
 }
 
-function mostrar() {
-    $("#cons").removeAttr("disabled");
-    $("#voc").removeAttr("disabled");
-    $("#adv").removeAttr("disabled");
-}
+
 
 ////////////////////////////////////////// RULETA //////////////////////////////////////////////
 
@@ -348,6 +351,7 @@ function adivinarConsonante(this: any) {
         $("." + this.value).text(this.value);
         sumar(valor);
         $("#cons").attr("disabled", "disabled");
+        $("#letras").html("");
         $("#adv").removeAttr("disabled");
         $("#voc").removeAttr("disabled");
         $("#spin").removeAttr("disabled");
@@ -376,8 +380,6 @@ function comprarVocales(this: any) {
         pasarTurno();
     }
     
-    $("#spin").removeAttr("disabled");
-
 }
 
 
@@ -388,6 +390,8 @@ function adivinar() {
         alert("Has acertado!");
         SumarBote();
         rondaAcabada();
+        esconder();
+        $("#spin").removeAttr("disabled");
 
     } else {
         alert("Palabra incorrecta");
@@ -404,7 +408,7 @@ function pasarTurno() {
         jug[++jugador].activar();
 
     esconder();
-    $("#spin").removeAttr("disable");
+    $("#spin").removeAttr("disabled");
     crearJugadores();
 }
 
